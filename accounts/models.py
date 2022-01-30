@@ -1,7 +1,7 @@
-from pydoc import describe
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
 
 from .managers import CustomUserManager
 
@@ -57,4 +57,24 @@ class CustomUser(AbstractUser):
 
 
 class NGO(CustomUser):
-    description = models.CharField(max_length=500)
+    # TODO: Location, Contact
+    phone_number = PhoneNumberField()
+    ngo_approval_cert = models.FileField()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "NGO"
+
+
+class Donner(CustomUser):
+    # TODO: Location, Contact
+    phone_number = PhoneNumberField()
+    coins = models.IntegerField(default=5)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Donner"
