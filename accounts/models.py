@@ -70,16 +70,26 @@ class NGO(CustomUser):
     class Meta:
         verbose_name = "NGO"
 
-
+GENDER_CHOICES = [
+    ('Male','Male'),
+    ('Female','Female'),
+    ('Others','Others')
+]
 class Donner(CustomUser):
     # TODO: Location, Contact
-    country = CountryField()
+    
     longitude = models.DecimalField(max_digits=9, decimal_places=6,blank=True, null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6,blank=True, null=True)
-    phone_number = PhoneNumberField(default='')
+    phone_number = PhoneNumberField(blank=True)
+    country = CountryField(blank_label='(select country)')
+    description=models.TextField(max_length=200,blank=False)
     date = models.DateField(_("Date"), default=datetime.date.today)
     time=models. DateTimeField(default=now ,null=True,blank=True)
     DOB=models.DateField(_("Date"), default=datetime.date.today)
+    gender =models.CharField(max_length=100,choices=GENDER_CHOICES,default=1)
+    city=models.CharField(max_length=100)
+    state= models.CharField(max_length=50)
+    pin=models.PositiveIntegerField()
     images=models.ImageField(upload_to='media/images',null=True,default='')
     coins = models.IntegerField(default=5)
 
