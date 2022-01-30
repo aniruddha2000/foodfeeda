@@ -26,9 +26,8 @@ SECRET_KEY = "django-insecure-voyn9*cv)*3@1pik$u@m-%brc$5=pw0&y5@h4go&*vr5b7sq1^
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-AUTH_USER_MODEL = 'users.CustomUser'
-
+# AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -48,8 +48,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "accounts",
-]
+    ]
 
 ROOT_URLCONF = "foodfeeda.urls"
 
@@ -74,11 +73,14 @@ WSGI_APPLICATION = "foodfeeda.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+import os
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':'FOODFEEDA_DB',
+        'USER':'postgres',
+        'PASSWORD':os.getenv('MYPASSWORD'),
+        'HOST':'localhost'
     }
 }
 
@@ -125,3 +127,4 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
