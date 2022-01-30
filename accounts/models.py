@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
+from django_countries.fields import CountryField
+import datetime 
+from django.utils.timezone import now
 
 from .managers import CustomUserManager
 
@@ -70,7 +73,14 @@ class NGO(CustomUser):
 
 class Donner(CustomUser):
     # TODO: Location, Contact
-    phone_number = PhoneNumberField()
+    country = CountryField()
+    longitude = models.DecimalField(max_digits=9, decimal_places=6,blank=True, null=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6,blank=True, null=True)
+    phone_number = PhoneNumberField(default='')
+    date = models.DateField(_("Date"), default=datetime.date.today)
+    time=models. DateTimeField(default=now ,null=True,blank=True)
+    DOB=models.DateField(_("Date"), default=datetime.date.today)
+    images=models.ImageField(upload_to='media/images',null=True,default='')
     coins = models.IntegerField(default=5)
 
     def __str__(self):
