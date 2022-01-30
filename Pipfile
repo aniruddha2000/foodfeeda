@@ -6,7 +6,8 @@ name = "pypi"
 [packages]
 django = "==3.2.10"
 djangorestframework = "==3.13.0"
-
+django-cities = "==0.6"
+django-countries = "==7.2.1"
 
 [dev-packages]
 django-phonenumber-field = "==6.0.0"
