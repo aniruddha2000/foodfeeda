@@ -79,7 +79,7 @@ import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'FOODFEEDADB',
+        'NAME':'FOODFEEDADATABASE',
         'USER':'postgres',
         'PASSWORD':os.getenv('MYPASSWORD'),
         'HOST':'localhost'
