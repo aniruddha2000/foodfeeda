@@ -7,8 +7,6 @@ name = "pypi"
 django = "==3.2.10"
 djangorestframework = "==3.13.0"
 
-
-
 [dev-packages]
 django-countries = "==7.2.1"
 django-phonenumber-field = "==6.0.0"
@@ -16,7 +14,7 @@ django-allauth = "==0.13.0"
 django-rest-auth = "==0.9.5"
 phonenumbers = "==8.12.42"
 psycopg2 = "*"
-pillow = "*"
+pillow = "==8.4.0"
 
 [requires]
 python_version = "3.8.0"
