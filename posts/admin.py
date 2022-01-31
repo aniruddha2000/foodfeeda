@@ -1,11 +1,5 @@
 from django.contrib import admin
-from posts.models import DonationPost
+from posts.models import DonationPost, FoodPost
 
-<<<<<<< HEAD
-from .models import Donner_Post
-# Register your models here.
-admin.site.register(Donner_Post)
-=======
-
+admin.site.register(FoodPost)
 admin.site.register(DonationPost)
->>>>>>> Register Donation post model in the admin panel
