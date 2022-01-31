@@ -75,9 +75,8 @@ class Address(models.Model):
 
 
 class NGO(CustomUser):
-    # TODO: Location, Contact
     phone_number = PhoneNumberField()
-    address_ngo = models.OneToOneField(Address, on_delete=models.CASCADE)
+    address_ngo = Address()
     ngo_approval_cert = models.FileField()
 
     def __str__(self):
@@ -94,7 +93,7 @@ GENDER_CHOICES = [("Male", "Male"), ("Female", "Female"), ("Others", "Others")]
 class Donner(CustomUser):
     phone_number = PhoneNumberField()
     gender = models.CharField(max_length=100, choices=GENDER_CHOICES, default=1)
-    address_donner = models.OneToOneField(Address, on_delete=models.CASCADE)
+    address_donner = Address()
     coins = models.IntegerField(default=5)
     DOB = models.DateField(_("DOB"), default=datetime.date.today)
     profile_photo = models.ImageField(upload_to="media/images", null=True, default="")
