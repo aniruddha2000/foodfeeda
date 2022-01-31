@@ -1,10 +1,13 @@
-from django.db import models
+import datetime
+from enum import unique
+
 from django.contrib.auth.models import AbstractUser
-from django.utils.translation import ugettext_lazy as _
-from phonenumber_field.modelfields import PhoneNumberField
-from django_countries.fields import CountryField
-import datetime 
+from django.db import models
 from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
+from setuptools import Require
+from django_countries.fields import CountryField
+from phonenumber_field.modelfields import PhoneNumberField
 
 from .managers import CustomUserManager
 
@@ -12,11 +15,9 @@ from .managers import CustomUserManager
 class CustomUser(AbstractUser):
 
     username = None
+    id = models.AutoField(primary_key=True)
     email = models.EmailField(_("email address"), unique=True)
     name = models.CharField(max_length=100)
-
-    ## TODO: Location, contact
-
     is_admin = models.BooleanField(default=False)
     # is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -59,9 +60,24 @@ class CustomUser(AbstractUser):
         return self.admin
 
 
+class Address(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    country = CountryField(blank_label="(select country)")
+    state = models.CharField(max_length=50)
+    city = models.CharField(max_length=100)
+    pin = models.PositiveIntegerField()
+
+    def __str__(self) -> str:
+        return f"{self.user} {self.country} {self.state}"
+
+    class Meta:
+        verbose_name = "Address"
+
+
 class NGO(CustomUser):
     # TODO: Location, Contact
     phone_number = PhoneNumberField()
+    address_ngo = models.OneToOneField(Address, on_delete=models.CASCADE)
     ngo_approval_cert = models.FileField()
 
     def __str__(self):
@@ -69,32 +85,23 @@ class NGO(CustomUser):
 
     class Meta:
         verbose_name = "NGO"
+        unique_together = ("phone_number",)
 
-GENDER_CHOICES = [
-    ('Male','Male'),
-    ('Female','Female'),
-    ('Others','Others')
-]
+
+GENDER_CHOICES = [("Male", "Male"), ("Female", "Female"), ("Others", "Others")]
+
+
 class Donner(CustomUser):
-    # TODO: Location, Contact
-    
-    longitude = models.DecimalField(max_digits=9, decimal_places=6,blank=True, null=True)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6,blank=True, null=True)
-    phone_number = PhoneNumberField(blank=True)
-    country = CountryField(blank_label='(select country)')
-    description=models.TextField(max_length=200,blank=False)
-    date = models.DateField(_("Date"), default=datetime.date.today)
-    time=models. DateTimeField(default=now ,null=True,blank=True)
-    DOB=models.DateField(_("Date"), default=datetime.date.today)
-    gender =models.CharField(max_length=100,choices=GENDER_CHOICES,default=1)
-    city=models.CharField(max_length=100)
-    state= models.CharField(max_length=50)
-    pin=models.PositiveIntegerField()
-    images=models.ImageField(upload_to='media/images',null=True,default='')
+    phone_number = PhoneNumberField()
+    gender = models.CharField(max_length=100, choices=GENDER_CHOICES, default=1)
+    address_donner = models.OneToOneField(Address, on_delete=models.CASCADE)
     coins = models.IntegerField(default=5)
+    DOB = models.DateField(_("DOB"), default=datetime.date.today)
+    profile_photo = models.ImageField(upload_to="media/images", null=True, default="")
 
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name = "Donner"
+        unique_together = ("phone_number",)
