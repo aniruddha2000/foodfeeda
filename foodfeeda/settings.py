@@ -26,8 +26,7 @@ SECRET_KEY = "django-insecure-voyn9*cv)*3@1pik$u@m-%brc$5=pw0&y5@h4go&*vr5b7sq1^
 DEBUG = True
 
 ALLOWED_HOSTS = []
-# AUTH_USER_MODEL = 'users.CustomUser'
-AUTH_USER_MODEL = "accounts.CustomUser"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +41,8 @@ INSTALLED_APPS = [
     "django_countries",
     "phonenumber_field",
 ]
+
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
