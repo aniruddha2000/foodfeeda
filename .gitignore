@@ -267,3 +267,6 @@ dmypy.json
 
 #python database migrations
 migrations/
+
+#media
+media/
