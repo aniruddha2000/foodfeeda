@@ -24,3 +24,6 @@ class DonationPost(models.Model):
     amount = models.PositiveIntegerField()
     post_date = models.DateTimeField(auto_now=True, editable=False)
     accepted = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.campaignName
