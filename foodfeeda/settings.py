@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-voyn9*cv)*3@1pik$u@m-%brc$5=pw0&y5@h4go&*vr5b7sq1^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -85,8 +85,9 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "FOODFEEDADATABASE",
         "USER": "postgres",
-        "PASSWORD": os.getenv("MYPASSWORD"),
-        "HOST": "localhost",
+        "PASSWORD": "123",
+        "HOST": "db",
+        "PORT": 5432,
     }
 }
 
