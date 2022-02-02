@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 django = "==3.2.10"
 djangorestframework = "==3.13.0"
+django-celery-results = "==2.2.0"
 
 [dev-packages]
 django-countries = "==7.2.1"
@@ -15,6 +16,9 @@ django-rest-auth = "==0.9.5"
 phonenumbers = "==8.12.42"
 psycopg2 = "*"
 pillow = "==8.4.0"
+django-celery-beat = "==2.2.1"
+celery = "==5.2.3"
+redis = "*"
 
 [requires]
 python_version = "3.8.0"
