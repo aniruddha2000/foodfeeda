@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts",
     "posts",
+    "donations",
     "django_countries",
     "phonenumber_field",
 ]
