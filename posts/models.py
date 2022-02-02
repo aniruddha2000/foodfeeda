@@ -1,5 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+import datetime
+from django.utils import timezone
+
 
 from accounts.models import Donner, NGO
 
@@ -13,8 +16,16 @@ class FoodPost(models.Model):
     lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     lon = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     received = models.BooleanField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
+    created_at = models.DateTimeField(default=timezone.now,blank=True,)
+    @property
+    def delete_post(self):
+        time = self.created_at + datetime.timedelta(minutes=5)
+        if time < datetime.datetime.now():
+            e = FoodPost.objects.get(pk=self.pk)
+            e.delete()
+            return True
+        else:
+            return False
 
 class DonationPost(models.Model):
     user = models.ForeignKey(NGO, on_delete=models.CASCADE)
