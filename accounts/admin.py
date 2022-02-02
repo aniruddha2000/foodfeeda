@@ -8,7 +8,7 @@ from accounts.forms import CustomUserChangeForm, CustomUserCreationForm
 class DonnerAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    model = NGO
+    model = Donner
     list_display = (
         "email",
         "first_name",
@@ -57,7 +57,7 @@ class DonnerAdmin(UserAdmin):
 class NGOAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    model = Donner
+    model = NGO
     list_display = (
         "email",
         "name",
