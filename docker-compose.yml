@@ -18,3 +18,5 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: FOODFEEDADATABASE
       POSTGRES_PASSWORD: 123
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
