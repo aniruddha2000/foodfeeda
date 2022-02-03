@@ -36,12 +36,22 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "accounts",
-    "posts",
-    "donations",
+    "rest_framework",
+    "rest_framework.authtoken",
     "django_countries",
     "phonenumber_field",
+    "accounts",
+    "donations",
+    "posts",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+}
+
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
