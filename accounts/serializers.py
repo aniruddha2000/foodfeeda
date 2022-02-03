@@ -75,12 +75,12 @@ class NGORegisterSerializer(ModelSerializer):
             "password",
             "password2",
             "name",
-            # "phone_number",
-            # "country",
-            # "state",
-            # "city",
-            # "pin",
-            # "ngo_approval_cert",
+            "phone_number",
+            "country",
+            "state",
+            "city",
+            "pin",
+            "ngo_approval_cert",
         )
         extra_kwargs = {
             "name": {"required": True},
