@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from accounts.models import Donner
+from accounts.serializers import DonnerRegisterSerializer
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny
 
-# Create your views here.
+
+class DonnerRegisterView(CreateAPIView):
+    queryset = Donner.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = DonnerRegisterSerializer
