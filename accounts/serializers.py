@@ -1,13 +1,52 @@
+from django.contrib.auth.password_validation import validate_password
 from rest_framework.serializers import (
-    ModelSerializer,
-    EmailField,
     CharField,
+    EmailField,
+    ModelSerializer,
     ValidationError,
 )
 from rest_framework.validators import UniqueValidator
-from django.contrib.auth.password_validation import validate_password
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from accounts.models import Donner, NGO
+from accounts.models import NGO, Donner
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
+
+        # Add custom claims
+        token["email"] = user.email
+
+        return token
+
+
+class DonnerDetailSerializer(ModelSerializer):
+    class Meta:
+        model = Donner
+        exclude = (
+            "is_superuser",
+            "is_staff",
+            "last_login",
+            "password",
+            "country",
+            "user_permissions",
+            "groups",
+        )
+
+
+class NGODetailSerializer(ModelSerializer):
+    class Meta:
+        model = NGO
+        exclude = (
+            "is_superuser",
+            "is_staff",
+            "last_login",
+            "password",
+            "country",
+            "user_permissions",
+        )
 
 
 class DonnerRegisterSerializer(ModelSerializer):
@@ -21,13 +60,14 @@ class DonnerRegisterSerializer(ModelSerializer):
     class Meta:
         model = Donner
         fields = (
+            "id",
             "email",
             "password",
             "password2",
             "first_name",
             "last_name",
             "phone_number",
-            "country",
+            # "country",
             "state",
             "city",
             "pin",
@@ -52,8 +92,13 @@ class DonnerRegisterSerializer(ModelSerializer):
             email=validated_data["email"],
             first_name=validated_data["first_name"],
             last_name=validated_data["last_name"],
+            phone_number=validated_data["phone_number"],
+            state=validated_data["state"],
+            city=validated_data["city"],
+            pin=validated_data["pin"],
+            DOB=validated_data["DOB"],
+            profile_photo=validated_data["profile_photo"],
         )
-
         user.set_password(validated_data["password"])
         user.save()
 
@@ -71,12 +116,13 @@ class NGORegisterSerializer(ModelSerializer):
     class Meta:
         model = NGO
         fields = (
+            "id",
             "email",
             "password",
             "password2",
             "name",
             "phone_number",
-            "country",
+            # "country",
             "state",
             "city",
             "pin",
@@ -98,6 +144,12 @@ class NGORegisterSerializer(ModelSerializer):
         user = NGO.objects.create(
             email=validated_data["email"],
             name=validated_data["name"],
+            phone_number=validated_data["phone_number"],
+            # country=validated_data["country"],
+            state=validated_data["state"],
+            city=validated_data["city"],
+            pin=validated_data["pin"],
+            ngo_approval_cert=validated_data["ngo_approval_cert"],
         )
 
         user.set_password(validated_data["password"])
