@@ -39,7 +39,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class NGO(CustomUser):
 
     name = models.CharField(max_length=30)
-    ngo_approval_cert = models.FileField()
+    ngo_approval_cert = models.FileField(upload_to="media/files")
 
     def __str__(self):
         return self.name
