@@ -8,3 +8,4 @@ phonenumbers==8.12.42
 psycopg2-binary==2.9.3
 psycopg2
 pillow==8.4.0
+djangorestframework-simplejwt==5.0.0
