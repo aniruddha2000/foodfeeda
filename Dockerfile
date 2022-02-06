@@ -1,5 +1,5 @@
 # base image
-FROM python:3
+FROM python:3.9.10
 
 #maintainer
 LABEL Author="foodfeeda"
