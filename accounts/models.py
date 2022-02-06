@@ -5,10 +5,6 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
-from django.conf import settings
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-from rest_framework.authtoken.models import Token
 
 from accounts.managers import CustomUserManager
 
@@ -65,15 +61,3 @@ class Donner(CustomUser):
 
     class Meta:
         verbose_name = "Donner"
-
-
-@receiver(post_save, sender=NGO)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
-
-
-@receiver(post_save, sender=Donner)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
