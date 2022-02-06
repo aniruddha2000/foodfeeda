@@ -16,7 +16,7 @@ To build the images and run the container
 $ docker-compose up
 ```
 
-To initialize the tables in the databse
+To initialize the tables in the databse(Note: Run below command with running container)
 
 ```bash
 $ docker-compose exec backend python manage.py makemigrations
