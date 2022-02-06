@@ -270,3 +270,6 @@ migrations/
 
 #media
 media/
+
+# postgres files
+postgres_data/
