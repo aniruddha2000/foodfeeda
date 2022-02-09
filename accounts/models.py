@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
-
 from accounts.managers import CustomUserManager
 
 
@@ -36,7 +35,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class NGO(CustomUser):
 
     name = models.CharField(max_length=30)
-    ngo_approval_cert = models.FileField()
+    ngo_approval_cert = models.FileField(upload_to="media/files")
 
     def __str__(self):
         return self.name
@@ -62,4 +61,3 @@ class Donner(CustomUser):
 
     class Meta:
         verbose_name = "Donner"
-        # unique_together = ("phone_number",)
