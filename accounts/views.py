@@ -139,6 +139,12 @@ class DonnerUpdateProfileView(UpdateAPIView):
     queryset = Donner.objects.all()
     serializer_class = DonnerUpdateUserSerializer
 
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response({"data": serializer.data, "status": "Successfully updated Donner details"})
+
 
 class NGOUpdateProfileView(UpdateAPIView):
 
@@ -146,3 +152,9 @@ class NGOUpdateProfileView(UpdateAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = NGO.objects.all()
     serializer_class = NGOUpdateUserSerializer
+
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response({"data": serializer.data, "status": "Successfully updated NGO details"})
