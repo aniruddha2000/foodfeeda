@@ -7,7 +7,9 @@ from accounts.views import (
     MyObtainTokenPairView,
     APILogoutView,
     DonnerChangePasswordView,
-    NGOChangePasswordView
+    NGOChangePasswordView,
+    DonnerUpdateProfileView,
+    NGOUpdateProfileView
 )
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
@@ -30,6 +32,10 @@ urlpatterns = [
          DonnerChangePasswordView.as_view(), name="change-password-donner"),
     path("auth/ngo/change-password/<int:pk>/",
          NGOChangePasswordView.as_view(), name="change-password-ngo"),
+    path("donner/update-profile/<int:pk>/",
+         DonnerUpdateProfileView.as_view(), name="update-profile-donner"),
+    path("ngo/update-profile/<int:pk>/",
+         NGOUpdateProfileView.as_view(), name="update-profile-ngo"),
     path("donner/user/<id>", DonnerViewSet.as_view(), name="donner-user"),
     path("ngo/user/<id>", NGOViewSet.as_view(), name="ngo-user"),
 ]
