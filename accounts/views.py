@@ -6,7 +6,9 @@ from accounts.serializers import (
     NGODetailSerializer,
     MyTokenObtainPairSerializer,
     DonnerChangePasswordSerializer,
-    NGOChangePasswordSerializer
+    NGOChangePasswordSerializer,
+    DonnerUpdateUserSerializer,
+    NGOUpdateUserSerializer
 )
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -128,3 +130,19 @@ class NGOChangePasswordView(UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         return Response({"status": "Successfully updated NGO password"})
+
+
+class DonnerUpdateProfileView(UpdateAPIView):
+
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = Donner.objects.all()
+    serializer_class = DonnerUpdateUserSerializer
+
+
+class NGOUpdateProfileView(UpdateAPIView):
+
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = NGO.objects.all()
+    serializer_class = NGOUpdateUserSerializer
