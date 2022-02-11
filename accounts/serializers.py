@@ -224,3 +224,75 @@ class NGOChangePasswordSerializer(ModelSerializer):
         instance.save()
 
         return instance
+
+
+class DonnerUpdateUserSerializer(ModelSerializer):
+
+    class Meta:
+        model = Donner
+        fields = (
+            "first_name",
+            "last_name",
+            "phone_number",
+            # "country",
+            "state",
+            "city",
+            "pin",
+            "DOB",
+            "profile_photo",
+        )
+
+    def validate_email(self, value):
+        user = self.context['request'].user
+        if Donner.objects.exclude(pk=user.pk).filter(email=value).exists():
+            raise ValidationError({"email": "This email is already in use."})
+        return value
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data['first_name']
+        instance.last_name = validated_data['last_name']
+        instance.phone_number = validated_data['phone_number']
+        # instance.country = validated_data['country']
+        instance.state = validated_data['state']
+        instance.city = validated_data['city']
+        instance.pin = validated_data['pin']
+        instance.DOB = validated_data['DOB']
+        instance.profile_photo = validated_data['profile_photo']
+
+        instance.save()
+
+        return instance
+
+
+class NGOUpdateUserSerializer(ModelSerializer):
+
+    class Meta:
+        model = NGO
+        fields = (
+            "name",
+            "phone_number",
+            # "country",
+            "state",
+            "city",
+            "pin",
+            "ngo_approval_cert",
+        )
+
+    def validate_email(self, value):
+        user = self.context['request'].user
+        if NGO.objects.exclude(pk=user.pk).filter(email=value).exists():
+            raise ValidationError({"email": "This email is already in use."})
+        return value
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data['name']
+        instance.phone_number = validated_data['phone_number']
+        # instance.country = validated_data['country']
+        instance.state = validated_data['state']
+        instance.city = validated_data['city']
+        instance.pin = validated_data['pin']
+        instance.ngo_approval_cert = validated_data['ngo_approval_cert']
+
+        instance.save()
+
+        return instance
