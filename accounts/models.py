@@ -19,6 +19,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     city = models.CharField(max_length=100)
     pin = models.PositiveIntegerField(null=True)
 
+    is_email_verified = models.BooleanField(default=False)
+    is_phone_verified = models.BooleanField(default=False)
+
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -50,10 +53,14 @@ GENDER_CHOICES = [("Male", "Male"), ("Female", "Female"), ("Others", "Others")]
 class Donner(CustomUser):
     first_name = models.CharField(max_length=15)
     last_name = models.CharField(max_length=15)
-    gender = models.CharField(max_length=100, choices=GENDER_CHOICES, default=1)
+    gender = models.CharField(
+        max_length=100, choices=GENDER_CHOICES, default=1
+    )
     coins = models.IntegerField(default=5)
     DOB = models.DateField(_("DOB"), default=datetime.date.today)
-    profile_photo = models.ImageField(upload_to="media/images", null=True, default="")
+    profile_photo = models.ImageField(
+        upload_to="media/images", null=True, default=""
+    )
 
     def __str__(self):
         return self.first_name
