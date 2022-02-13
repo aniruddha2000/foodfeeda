@@ -14,7 +14,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     phone_number = PhoneNumberField()
 
-    country = CountryField(blank_label="(select country)")
+    country = models.CharField(max_length=50, default="")
     state = models.CharField(max_length=50)
     city = models.CharField(max_length=100)
     pin = models.PositiveIntegerField(null=True)
@@ -48,7 +48,6 @@ GENDER_CHOICES = [("Male", "Male"), ("Female", "Female"), ("Others", "Others")]
 
 
 class Donner(CustomUser):
-
     first_name = models.CharField(max_length=15)
     last_name = models.CharField(max_length=15)
     gender = models.CharField(max_length=100, choices=GENDER_CHOICES, default=1)
