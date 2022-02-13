@@ -6,23 +6,23 @@ from posts.models import DonationPost, FoodPost
 class DonationPostAdmin(admin.ModelAdmin):
     model = DonationPost
     list_display = (
-        "user",
+        "author",
         "campaignName",
         "post_date",
         "accepted",
     )
     list_filter = (
-        "user",
+        "author",
         "campaignName",
         "accepted",
     )
     fieldsets = (
-        ("Details", {"fields": ("user", "campaignName", "purpose", "amount")}),
-        ("ID & Date", {"fields": ("donation_post_id", "post_date")}),
+        ("Details", {"fields": ("author", "campaignName", "purpose", "amount")}),
+        ("ID & Date", {"fields": ("id", "post_date")}),
         ("Status", {"fields": ("accepted",)}),
     )
     readonly_fields = (
-        "donation_post_id",
+        "id",
         "post_date",
     )
     add_fieldsets = (
@@ -31,8 +31,8 @@ class DonationPostAdmin(admin.ModelAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
-                    "user",
-                    "donation_post_id",
+                    "author",
+                    "id",
                     "campaignName",
                     "purpose",
                     "amount",
@@ -42,31 +42,31 @@ class DonationPostAdmin(admin.ModelAdmin):
             },
         ),
     )
-    search_fields = ("user",)
-    ordering = ("donation_post_id",)
+    search_fields = ("author",)
+    ordering = ("id",)
 
 
 class FoodPostAdmin(admin.ModelAdmin):
     model = FoodPost
     list_display = (
-        "user",
-        "name",
+        "auther",
+        # "name",
         "created_at",
         "received",
     )
     list_filter = (
-        "user",
-        "name",
+        "auther",
+        # "name",
         "received",
     )
     fieldsets = (
-        ("Details", {"fields": ("user", "name", "description", "food_photo")}),
-        ("ID & Date", {"fields": ("food_post_id", "created_at")}),
-        ("Location", {"fields": ("lat", "lon")}),
+        ("Details", {"fields": ("auther","description", "food_photo")}),
+        ("ID & Date", {"fields": ("id", "created_at")}),
+        ("Location", {"fields": ("lat", "lon", "place")}),
         ("Status", {"fields": ("received",)}),
     )
     readonly_fields = (
-        "food_post_id",
+        "id",
         "created_at",
     )
     add_fieldsets = (
@@ -75,21 +75,23 @@ class FoodPostAdmin(admin.ModelAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
-                    "user",
-                    "food_post_id",
-                    "name",
+                    "auther",
+                    "id",
+                    # "food_post_id",
+                    # "name",
                     "food_photo",
                     "description",
                     "lat",
                     "lon",
+                    "place",
                     "received",
                     "created_at",
                 ),
             },
         ),
     )
-    search_fields = ("user",)
-    ordering = ("food_post_id",)
+    search_fields = ("auther",)
+    ordering = ("id",)
 
 
 admin.site.register(DonationPost, DonationPostAdmin)
