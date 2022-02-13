@@ -29,6 +29,21 @@ To create superuser
 $ docker-compose exec backend python manage.py createsuperuser
 ```
 
+To drop the database
+
+```bash
+$ docker-compose down
+$ docker-compose up db
+$ docker-compose exec db psql -U postgres -d postgres -c 'DROP DATABASE "FOODFEEDADATABASE";'
+```
+
+To create the database
+
+```bash
+$ docker-compose exec db psql -U postgres -d postgres -c 'CREATE DATABASE "FOODFEEDADATABASE";'
+$ docker-compose exec backend python manage.py migrate
+```
+
 ### With Pipenv -
 
 To install all the dependencies -
