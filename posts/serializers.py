@@ -2,40 +2,26 @@
 import os
 from django.conf import settings
 from rest_framework import serializers
-from .models import FoodPost
+from .models import FoodPost,DonationPost
 
 
 class PostCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodPost
         fields = [
+            'auther',
             'title',
-            'name',
             'food_photo',
             'description',
             'lat',
             'lon',
-           
-           
+            'place',  
         ]
+        read_only_fields = ['auther']
 
-    def validate_title(self, value):
-        if len(value) > 100:
-            return serializers.ValidationError("Max title length is 100 characters")
-        return value
 
-    def validate_description(self, value):
-        if len(value) > 200:
-            return serializers.ValidationError(
-                "Max description length is 200 characters"
-            )
-        return value
-    
-    def clean_image(self, value):
-        initial_path = value.path
-        new_path = settings.MEDIA_ROOT + value.name
-        os.rename(initial_path, new_path)
-        return value
+
+
 
 
 class PostListSerializer(serializers.ModelSerializer):
@@ -43,16 +29,33 @@ class PostListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FoodPost
+        fields = "__all__"
+       
+class DonationPostCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DonationPost
         fields = [
-            'title',
-            'user',
-            'id',
-            'name',
-            'food_photo',
-            'description',
-            'lat',
-            'lon',
-            'created_at',
+            'author',
+            'campaignName',
+            'purpose',
+            'amount',
+
+            
+              
         ]
+        read_only_fields = ['author']
+
+
+
+
+
+
+class DonationPostListSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = DonationPost
+        fields = "__all__"
+       
 
 
