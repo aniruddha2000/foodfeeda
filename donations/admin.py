@@ -1,3 +1,3 @@
 from django.contrib import admin
-from donations.models import Donner_paydetails
-admin.site.register(Donner_paydetails)
+from donations.models import DonnerPayDetails
+admin.site.register(DonnerPayDetails)
