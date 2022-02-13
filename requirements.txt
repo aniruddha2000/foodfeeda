@@ -1,6 +1,5 @@
 django==3.2.10
 djangorestframework==3.13.0
-django-countries==7.2.1
 django-phonenumber-field==6.0.0
 django-allauth==0.13.0
 django-rest-auth==0.9.5
@@ -9,3 +8,4 @@ psycopg2-binary==2.9.3
 psycopg2
 pillow==8.4.0
 djangorestframework-simplejwt==5.0.0
+razorpay ==1.2.0
