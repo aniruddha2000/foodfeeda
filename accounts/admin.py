@@ -24,6 +24,10 @@ class DonnerAdmin(UserAdmin):
         (None, {"fields": ("email", "password")}),
         ("Permissions", {"fields": ("is_staff", "is_active")}),
     )
+    readonly_fields = (
+        "id",
+        "type",
+    )
     add_fieldsets = (
         (
             None,
@@ -40,6 +44,7 @@ class DonnerAdmin(UserAdmin):
                     "password2",
                     "is_staff",
                     "is_active",
+                    "type",
                     "phone_number",
                     "country",
                     "state",
@@ -73,6 +78,10 @@ class NGOAdmin(UserAdmin):
         (None, {"fields": ("email", "password")}),
         ("Permissions", {"fields": ("is_staff", "is_active")}),
     )
+    readonly_fields = (
+        "id",
+        "type",
+    )
     add_fieldsets = (
         (
             None,
@@ -85,6 +94,7 @@ class NGOAdmin(UserAdmin):
                     "password2",
                     "is_staff",
                     "is_active",
+                    "type",
                     "phone_number",
                     "country",
                     "state",

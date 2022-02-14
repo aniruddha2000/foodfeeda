@@ -8,6 +8,12 @@ from phonenumber_field.modelfields import PhoneNumberField
 from accounts.managers import CustomUserManager
 
 
+TYPE_CHOICES = (
+    (1, _("Donner")),
+    (2, _("NGO")),
+)
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("email address"), unique=True)
 
@@ -24,6 +30,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
+
+    type = models.IntegerField(choices=TYPE_CHOICES, default=1)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
