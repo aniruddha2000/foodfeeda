@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "accounts",
     "donations",
     "posts",
+    "chat",
 ]
 
 REST_FRAMEWORK = {
@@ -129,7 +130,6 @@ WSGI_APPLICATION = "foodfeeda.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-import os
 
 DATABASES = {
     "default": {
