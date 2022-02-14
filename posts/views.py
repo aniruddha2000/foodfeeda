@@ -55,10 +55,6 @@ class PostCreateAPIView(ListCreateAPIView):
         # if page is not None:
         #     serializer = self.get_serializer(page, many=True)
         #     return self.get_paginated_response(serializer.data)
-<<<<<<< HEAD
-=======
-
->>>>>>> 9f7befdabd05ed17fc56617fb3f64cca8a0781a2
         serializer = PostListSerializer(queryset, many=True)
         return Response(serializer.data)
 
