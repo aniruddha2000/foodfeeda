@@ -15,7 +15,8 @@ def start_payment(request):
     name = request.data['name']
 
     # setup razorpay client
-    client = razorpay.Client(auth=(os.getenv('PUBLIC_KEY'), os.getenv('SECRET_KEY')))
+    # client = razorpay.Client(auth=(os.getenv('PUBLIC_KEY'), os.getenv('SECRET_KEY')))
+    client = razorpay.Client(auth=('rzp_test_2YkSnHfTXU1CZA', 'iiEyIfKbwJfKV6PAlSG184RH'))
 
 
     # create razorpay order
@@ -25,9 +26,9 @@ def start_payment(request):
 
     # we are saving an order with isPaid=False
     order= Donner_paydetails.objects.create(
-                                 ngo_name=name,
-                                 amount=amount,
-                                 order_payment_id=payment['id'])
+                                 ngo_name= name,
+                                 amount= amount,
+                                 order_payment_id= payment['id'])
 
     serializer = OrderSerializer(order)
 
@@ -82,7 +83,7 @@ def handle_payment_success(request):
         'razorpay_signature': raz_signature
     }
 
-    client = razorpay.Client(auth=('rzp_test_9PhapTgkfwHU4D','F1azGBP3p8PYHoF10SisZ5N2'))
+    client = razorpay.Client(auth=('rzp_test_2YkSnHfTXU1CZA', 'iiEyIfKbwJfKV6PAlSG184RH'))
 
     # checking if the transaction is valid or not if it is "valid" then check will return None
     check = client.utility.verify_payment_signature(data)
