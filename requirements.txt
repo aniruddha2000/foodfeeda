@@ -9,8 +9,5 @@ psycopg2
 pillow==8.4.0
 djangorestframework-simplejwt==5.0.0
 razorpay ==1.2.0
-<<<<<<< HEAD
 stripe==2.65.0
-=======
 autopep8==1.6.0
->>>>>>> 9f7befdabd05ed17fc56617fb3f64cca8a0781a2
