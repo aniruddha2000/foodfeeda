@@ -1,11 +1,11 @@
-
 import os
 from django.conf import settings
-from rest_framework import serializers
-from .models import FoodPost,DonationPost
+from rest_framework.serializers import ModelSerializer
+from posts.models import FoodPost, DonationPost
 
 
-class PostCreateSerializer(serializers.ModelSerializer):
+class PostCreateSerializer(ModelSerializer):
+
     class Meta:
         model = FoodPost
         fields = [
@@ -15,23 +15,20 @@ class PostCreateSerializer(serializers.ModelSerializer):
             'description',
             'lat',
             'lon',
-            'place',  
+            'place',
         ]
         read_only_fields = ['auther']
 
 
-
-
-
-
-class PostListSerializer(serializers.ModelSerializer):
-
+class PostListSerializer(ModelSerializer):
 
     class Meta:
         model = FoodPost
         fields = "__all__"
-       
-class DonationPostCreateSerializer(serializers.ModelSerializer):
+
+
+class DonationPostCreateSerializer(ModelSerializer):
+
     class Meta:
         model = DonationPost
         fields = [
@@ -39,23 +36,12 @@ class DonationPostCreateSerializer(serializers.ModelSerializer):
             'campaignName',
             'purpose',
             'amount',
-
-            
-              
         ]
         read_only_fields = ['author']
 
 
-
-
-
-
-class DonationPostListSerializer(serializers.ModelSerializer):
-
+class DonationPostListSerializer(ModelSerializer):
 
     class Meta:
         model = DonationPost
         fields = "__all__"
-       
-
-

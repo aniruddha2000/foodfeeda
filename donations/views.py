@@ -5,8 +5,9 @@ import os
 import razorpay
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from donations.models import Donner_paydetails
+from donations.models import DonnerPayDetails
 from .serializers import OrderSerializer
+
 
 @api_view(['POST'])
 def start_payment(request):
@@ -15,9 +16,12 @@ def start_payment(request):
     name = request.data['name']
 
     # setup razorpay client
-    # client = razorpay.Client(auth=(os.getenv('PUBLIC_KEY'), os.getenv('SECRET_KEY')))
-    client = razorpay.Client(auth=('rzp_test_2YkSnHfTXU1CZA', 'iiEyIfKbwJfKV6PAlSG184RH'))
+    # client = razorpay.Client(
+    #     # auth=(os.getenv('PUBLIC_KEY'), os.getenv('SECRET_KEY')))
+    #     auth=("rzp_test_2YkSnHfTXU1CZA", "iiEyIfKbwJfKV6PAlSG184RH"))
 
+    client = razorpay.Client(
+        auth=('rzp_test_2YkSnHfTXU1CZA', 'iiEyIfKbwJfKV6PAlSG184RH'))
 
     # create razorpay order
     payment = client.order.create({"amount": int(amount) * 100,
@@ -25,14 +29,14 @@ def start_payment(request):
                                    "payment_capture": "1"})
 
     # we are saving an order with isPaid=False
-    order= Donner_paydetails.objects.create(
-                                 ngo_name= name,
-                                 amount= amount,
-                                 order_payment_id= payment['id'])
+    order = DonnerPayDetails.objects.create(
+        ngo_name=name,
+        amount=amount,
+        order_payment_id=payment['id'])
 
     serializer = OrderSerializer(order)
 
-    """order response will be 
+    """order response will be
      {
         "id": 4,
         "order_date": "03 February 2022 08:06 AM",
@@ -56,8 +60,8 @@ def handle_payment_success(request):
     res = json.loads(request.data["response"])
 
     """res will be:
-    {'razorpay_payment_id': 'pay_G3NivGft5Lx7I9e', 
-    'razorpay_order_id': 'order_G3NhGHF655UfjQ', 
+    {'razorpay_payment_id': 'pay_G3NivGft5Lx7I9e',
+    'razorpay_order_id': 'order_G3NhGHF655UfjQ',
     'razorpay_signature': '76b2accbefde6cd2392b5njn7sj8ebcbd4cb4ef8b78d62aa5cce553b2014993c0'}
     """
 
@@ -75,7 +79,7 @@ def handle_payment_success(request):
             raz_signature = res[key]
 
     # get order by payment_id which we've created earlier with isPaid=False
-    order = Donner_paydetails.objects.get(order_payment_id=ord_id)
+    order = DonnerPayDetails.objects.get(order_payment_id=ord_id)
 
     data = {
         'razorpay_order_id': ord_id,
@@ -83,7 +87,11 @@ def handle_payment_success(request):
         'razorpay_signature': raz_signature
     }
 
-    client = razorpay.Client(auth=('rzp_test_2YkSnHfTXU1CZA', 'iiEyIfKbwJfKV6PAlSG184RH'))
+    # client = razorpay.Client(
+    #     auth=(os.getenv('PUBLIC_KEY'), os.getenv('SECRET_KEY')))
+
+    client = razorpay.Client(
+        auth=('rzp_test_2YkSnHfTXU1CZA', 'iiEyIfKbwJfKV6PAlSG184RH'))
 
     # checking if the transaction is valid or not if it is "valid" then check will return None
     check = client.utility.verify_payment_signature(data)
@@ -93,7 +101,7 @@ def handle_payment_success(request):
         return Response({'error': 'Something went wrong'})
 
     # if payment is successful that means check is None then we will turn isPaid=True
-    order.rez_payment_id=response["razorpay_payment_id"]
+    order.rez_payment_id = response["razorpay_payment_id"]
     order.isPaid = True
     order.save()
 
