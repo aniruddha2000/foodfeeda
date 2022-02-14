@@ -7,6 +7,7 @@ from rest_framework.serializers import (
 )
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.response import Response
 
 from accounts.models import NGO, Donner
 
@@ -18,6 +19,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token["email"] = user.email
+        token["type"] = user.type
 
         return token
 
@@ -62,13 +64,14 @@ class DonnerRegisterSerializer(ModelSerializer):
         model = Donner
         fields = (
             "id",
+            "type",
             "email",
             "password",
             "password2",
             "first_name",
             "last_name",
             "phone_number",
-            # "country",
+            "country",
             "state",
             "city",
             "pin",
@@ -94,6 +97,8 @@ class DonnerRegisterSerializer(ModelSerializer):
             email=validated_data["email"],
             first_name=validated_data["first_name"],
             last_name=validated_data["last_name"],
+            type=validated_data["type"],
+            country=validated_data["country"],
             phone_number=validated_data["phone_number"],
             state=validated_data["state"],
             city=validated_data["city"],
@@ -125,7 +130,8 @@ class NGORegisterSerializer(ModelSerializer):
             "password2",
             "name",
             "phone_number",
-            # "country",
+            "type",
+            "country",
             "state",
             "city",
             "pin",
@@ -148,8 +154,9 @@ class NGORegisterSerializer(ModelSerializer):
         user = NGO.objects.create(
             email=validated_data["email"],
             name=validated_data["name"],
+            type=validated_data["type"],
             phone_number=validated_data["phone_number"],
-            # country=validated_data["country"],
+            country=validated_data["country"],
             state=validated_data["state"],
             city=validated_data["city"],
             pin=validated_data["pin"],
@@ -234,7 +241,7 @@ class DonnerUpdateUserSerializer(ModelSerializer):
             "first_name",
             "last_name",
             "phone_number",
-            # "country",
+            "country",
             "state",
             "city",
             "pin",
@@ -252,7 +259,7 @@ class DonnerUpdateUserSerializer(ModelSerializer):
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.phone_number = validated_data['phone_number']
-        # instance.country = validated_data['country']
+        instance.country = validated_data['country']
         instance.state = validated_data['state']
         instance.city = validated_data['city']
         instance.pin = validated_data['pin']
@@ -271,7 +278,7 @@ class NGOUpdateUserSerializer(ModelSerializer):
         fields = (
             "name",
             "phone_number",
-            # "country",
+            "country",
             "state",
             "city",
             "pin",
@@ -287,7 +294,7 @@ class NGOUpdateUserSerializer(ModelSerializer):
     def update(self, instance, validated_data):
         instance.name = validated_data['name']
         instance.phone_number = validated_data['phone_number']
-        # instance.country = validated_data['country']
+        instance.country = validated_data['country']
         instance.state = validated_data['state']
         instance.city = validated_data['city']
         instance.pin = validated_data['pin']

@@ -117,9 +117,6 @@ class DonnerChangePasswordView(UpdateAPIView):
     queryset = Donner.objects.all()
     serializer_class = DonnerChangePasswordSerializer
 
-    def update(self, request, *args, **kwargs):
-        return Response({"status": "Successfully updated Donner password"})
-
 
 class NGOChangePasswordView(UpdateAPIView):
 
@@ -127,9 +124,6 @@ class NGOChangePasswordView(UpdateAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = NGO.objects.all()
     serializer_class = NGOChangePasswordSerializer
-
-    def update(self, request, *args, **kwargs):
-        return Response({"status": "Successfully updated NGO password"})
 
 
 class DonnerUpdateProfileView(UpdateAPIView):

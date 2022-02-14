@@ -58,3 +58,17 @@ To launch the environment -
 ```bash
 $ pipenv shell
 ```
+
+## How to format the code after writting
+
+Formatting with pep8 style
+
+```bash
+$ docker-compose exec backend autopep8 ./ -r -i --pep8-passes 2000 --verbose --exclude="*/migrations"
+```
+
+Remove unused imports
+
+```bash
+$ docker-compose exec backend autoflake ./ -r -i --verbose --remove-unused-variables --exclude="*/migrations"
+```

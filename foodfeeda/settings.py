@@ -21,7 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-voyn9*cv)*3@1pik$u@m-%brc$5=pw0&y5@h4go&*vr5b7sq1^"
+SECRET_KEY = (
+    "django-insecure-voyn9*cv)*3@1pik$u@m-%brc$5=pw0&y5@h4go&*vr5b7sq1^"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,14 +46,17 @@ INSTALLED_APPS = [
     "accounts",
     "donations",
     "posts",
-    
+    "chat",
+    "rewards",
 ]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
 }
 
 
@@ -130,7 +135,6 @@ WSGI_APPLICATION = "foodfeeda.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-import os
 
 DATABASES = {
     "default": {

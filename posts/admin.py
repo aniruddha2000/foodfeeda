@@ -60,7 +60,7 @@ class FoodPostAdmin(admin.ModelAdmin):
         "received",
     )
     fieldsets = (
-        ("Details", {"fields": ("auther","description", "food_photo")}),
+        ("Details", {"fields": ("auther", "description", "food_photo")}),
         ("ID & Date", {"fields": ("id", "created_at")}),
         ("Location", {"fields": ("lat", "lon", "place")}),
         ("Status", {"fields": ("received",)}),
