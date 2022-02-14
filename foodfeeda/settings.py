@@ -39,11 +39,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_simplejwt",
-    "django_countries",
     "phonenumber_field",
     "accounts",
     "donations",
     "posts",
+    
 ]
 
 REST_FRAMEWORK = {
