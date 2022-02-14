@@ -1,7 +1,6 @@
 from urllib import response
 from django.shortcuts import render
 import json
-import os
 import razorpay
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -30,6 +29,7 @@ def start_payment(request):
 
     # we are saving an order with isPaid=False
     order = DonnerPayDetails.objects.create(
+        donner_id=request.user.id,
         ngo_name=name,
         amount=amount,
         order_payment_id=payment['id'])
