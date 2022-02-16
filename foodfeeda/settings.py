@@ -115,9 +115,9 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 ]
 CORS_ALLOWED_ORIGINS = [
-  "http://localhost:3000",]
+  "http://127.0.0.1:3000",]
 CORS_ORIGINS_ALLOW_ALL = True 
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000', 'http://localhost:8000']
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://127.0.0.1:8000']
 
 ROOT_URLCONF = "foodfeeda.urls"
 
