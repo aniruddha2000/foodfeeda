@@ -21,8 +21,12 @@ class DonnerAdmin(UserAdmin):
         "is_active",
     )
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
-        ("Permissions", {"fields": ("is_staff", "is_active")}),
+        (None, {"fields": ("email", "phone_number", "password",)}),
+        ("Permissions", {"fields": ("is_staff", "is_active",
+         "is_email_verified", "is_phone_verified",)}),
+        ("Address", {"fields": ("country", "state", "city", "pin",)}),
+        ("Details", {"fields": ("first_name", "last_name",
+         "gender", "coins", "DOB", "profile_photo",)}),
     )
     readonly_fields = (
         "id",
@@ -75,8 +79,10 @@ class NGOAdmin(UserAdmin):
         "is_active",
     )
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
-        ("Permissions", {"fields": ("is_staff", "is_active")}),
+        (None, {"fields": ("email", "phone_number", "password",)}),
+        ("Permissions", {"fields": ("is_staff", "is_active",
+         "is_email_verified", "is_phone_verified",)}),
+        ("Details", {"fields": ("name", "ngo_approval_cert",)}),
     )
     readonly_fields = (
         "id",
@@ -94,6 +100,7 @@ class NGOAdmin(UserAdmin):
                     "password2",
                     "is_staff",
                     "is_active",
+                    "is_email_verified",
                     "type",
                     "phone_number",
                     "country",
