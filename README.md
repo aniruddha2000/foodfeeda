@@ -72,3 +72,8 @@ Remove unused imports
 ```bash
 $ docker-compose exec backend autoflake ./ -r -i --verbose --remove-unused-variables --exclude="*/migrations"
 ```
+
+Sort imports
+```bash
+$ docker-compose exec backend isort ./
+```
