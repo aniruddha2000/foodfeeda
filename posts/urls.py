@@ -1,12 +1,9 @@
 from django.urls import path
+
 from posts.views import (
-    PostCreateAPIView,
-    PostUpdateDeleteAPIView,
-    AllPostListRetrieveAPIView,
-    DonationPostCreateAPIView,
-    DonationPostUpdateAPIView,
-    DonationAllPostListRetrieveAPIView,
-)
+    AllPostListRetrieveAPIView, DonationAllPostListRetrieveAPIView,
+    DonationPostCreateAPIView, DonationPostUpdateAPIView, PostCreateAPIView,
+    PostUpdateDeleteAPIView)
 
 app_name = "posts"
 

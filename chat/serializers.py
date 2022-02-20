@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer, SlugRelatedField
-from chat.models import Message
+
 from accounts.models import CustomUser
+from chat.models import Message
 
 
 class MessageSerializer(ModelSerializer):

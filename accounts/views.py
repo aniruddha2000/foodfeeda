@@ -1,34 +1,26 @@
+import jwt
+from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
-from accounts.models import Donner, NGO, CustomUser
-from accounts.serializers import (
-    DonnerRegisterSerializer,
-    NGORegisterSerializer,
-    DonnerDetailSerializer,
-    NGODetailSerializer,
-    MyTokenObtainPairSerializer,
-    DonnerChangePasswordSerializer,
-    NGOChangePasswordSerializer,
-    DonnerUpdateUserSerializer,
-    NGOUpdateUserSerializer
-)
-from accounts.utils import Util
+from rest_framework import status
 from rest_framework.generics import (
-    CreateAPIView,
-    RetrieveAPIView,
-    UpdateAPIView,
-    GenericAPIView
-)
+    CreateAPIView, GenericAPIView, RetrieveAPIView, UpdateAPIView)
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.token_blacklist.models import (
+    BlacklistedToken, OutstandingToken)
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import status
-import jwt
-from django.conf import settings
+
+from accounts.models import NGO, CustomUser, Donner
+from accounts.serializers import (
+    DonnerChangePasswordSerializer, DonnerDetailSerializer,
+    DonnerRegisterSerializer, DonnerUpdateUserSerializer,
+    MyTokenObtainPairSerializer, NGOChangePasswordSerializer,
+    NGODetailSerializer, NGORegisterSerializer, NGOUpdateUserSerializer)
+from accounts.utils import Util
 
 
 class MyObtainTokenPairView(TokenObtainPairView):

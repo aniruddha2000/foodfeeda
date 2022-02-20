@@ -1,22 +1,11 @@
 from django.urls import path
-from accounts.views import (
-    DonnerRegisterView,
-    NGORegisterView,
-    DonnerViewSet,
-    NGOViewSet,
-    MyObtainTokenPairView,
-    APILogoutView,
-    DonnerChangePasswordView,
-    NGOChangePasswordView,
-    DonnerUpdateProfileView,
-    NGOUpdateProfileView,
-    VerifyEmail
-)
-from rest_framework_simplejwt.views import (
-    TokenRefreshView,
-    TokenVerifyView,
-)
+from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
+from accounts.views import (
+    APILogoutView, DonnerChangePasswordView, DonnerRegisterView,
+    DonnerUpdateProfileView, DonnerViewSet, MyObtainTokenPairView,
+    NGOChangePasswordView, NGORegisterView, NGOUpdateProfileView, NGOViewSet,
+    VerifyEmail)
 
 urlpatterns = [
     path(

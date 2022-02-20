@@ -1,8 +1,8 @@
-from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
-from accounts.models import NGO, Donner
+from django.contrib.auth.admin import UserAdmin
 
 from accounts.forms import CustomUserChangeForm, CustomUserCreationForm
+from accounts.models import NGO, Donner
 
 
 class DonnerAdmin(UserAdmin):
