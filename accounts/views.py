@@ -1,6 +1,6 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
-from accounts.models import Donner, NGO
+from accounts.models import Donner, NGO, CustomUser
 from accounts.serializers import (
     DonnerRegisterSerializer,
     NGORegisterSerializer,
@@ -52,28 +52,13 @@ class NGOViewSet(RetrieveAPIView):
     lookup_field = "id"
 
 
-class DonnerVerifyEmail(GenericAPIView):
+class VerifyEmail(GenericAPIView):
     def get(self, request):
         token = request.GET.get("token")
         try:
-            payload = jwt.decode(token, settings.SECRET_KEY, algorithms='HS256')
-            user = Donner.objects.get(id=payload['user_id'])
-            if not user.is_email_verified:
-                user.is_email_verified = True
-                user.save()
-            return Response({"email": "Successfully verified"}, status=status.HTTP_200_OK)
-        except jwt.ExpiredSignatureError as identifier:
-            return Response({"error": "Activation Expired"}, status=status.HTTP_400_BAD_REQUEST)
-        except jwt.exceptions.DecodeError as identifier:
-            return Response({"error": "Invalid Token"}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class NGOVerifyEmail(GenericAPIView):
-    def get(self, request):
-        token = request.GET.get("token")
-        try:
-            payload = jwt.decode(token, settings.SECRET_KEY, algorithms='HS256')
-            user = NGO.objects.get(id=payload['user_id'])
+            payload = jwt.decode(
+                token, settings.SECRET_KEY, algorithms='HS256')
+            user = CustomUser.objects.get(id=payload['user_id'])
             if not user.is_email_verified:
                 user.is_email_verified = True
                 user.save()
@@ -96,7 +81,7 @@ class DonnerRegisterView(CreateAPIView):
 
             token = RefreshToken.for_user(user).access_token
             current_site = get_current_site(request).domain
-            relative_link = reverse("email_verify_donner")
+            relative_link = reverse("email_verify")
 
             absurl = "http://" + current_site + \
                 relative_link + "?token=" + str(token)
@@ -138,7 +123,7 @@ class NGORegisterView(CreateAPIView):
 
             token = RefreshToken.for_user(user).access_token
             current_site = get_current_site(request).domain
-            relative_link = reverse("email_verify_ngo")
+            relative_link = reverse("email_verify")
 
             absurl = "http://" + current_site + \
                 relative_link + "?token=" + str(token)

@@ -10,8 +10,7 @@ from accounts.views import (
     NGOChangePasswordView,
     DonnerUpdateProfileView,
     NGOUpdateProfileView,
-    DonnerVerifyEmail,
-    NGOVerifyEmail
+    VerifyEmail
 )
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
@@ -40,6 +39,6 @@ urlpatterns = [
          NGOUpdateProfileView.as_view(), name="update-profile-ngo"),
     path("donner/user/<id>", DonnerViewSet.as_view(), name="donner-user"),
     path("ngo/user/<id>", NGOViewSet.as_view(), name="ngo-user"),
-    path("auth/donner/email-veryfy/", DonnerVerifyEmail.as_view(), name="email_verify_donner"),
-    path("auth/ngo/email-veryfy/", NGOVerifyEmail.as_view(), name="email_verify_ngo"),
+    path("auth/user/email-veryfy/", VerifyEmail.as_view(), name="email_verify"),
+
 ]
