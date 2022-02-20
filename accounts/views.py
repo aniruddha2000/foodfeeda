@@ -1,3 +1,5 @@
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
 from accounts.models import Donner, NGO
 from accounts.serializers import (
     DonnerRegisterSerializer,
@@ -10,15 +12,23 @@ from accounts.serializers import (
     DonnerUpdateUserSerializer,
     NGOUpdateUserSerializer
 )
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
+from accounts.utils import Util
+from rest_framework.generics import (
+    CreateAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+    GenericAPIView
+)
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
-
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import status
+import jwt
+from django.conf import settings
 
 
 class MyObtainTokenPairView(TokenObtainPairView):
@@ -42,6 +52,38 @@ class NGOViewSet(RetrieveAPIView):
     lookup_field = "id"
 
 
+class DonnerVerifyEmail(GenericAPIView):
+    def get(self, request):
+        token = request.GET.get("token")
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms='HS256')
+            user = Donner.objects.get(id=payload['user_id'])
+            if not user.is_email_verified:
+                user.is_email_verified = True
+                user.save()
+            return Response({"email": "Successfully verified"}, status=status.HTTP_200_OK)
+        except jwt.ExpiredSignatureError as identifier:
+            return Response({"error": "Activation Expired"}, status=status.HTTP_400_BAD_REQUEST)
+        except jwt.exceptions.DecodeError as identifier:
+            return Response({"error": "Invalid Token"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class NGOVerifyEmail(GenericAPIView):
+    def get(self, request):
+        token = request.GET.get("token")
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms='HS256')
+            user = NGO.objects.get(id=payload['user_id'])
+            if not user.is_email_verified:
+                user.is_email_verified = True
+                user.save()
+            return Response({"email": "Successfully verified"}, status=status.HTTP_200_OK)
+        except jwt.ExpiredSignatureError as identifier:
+            return Response({"error": "Activation Expired"}, status=status.HTTP_400_BAD_REQUEST)
+        except jwt.exceptions.DecodeError as identifier:
+            return Response({"error": "Invalid Token"}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class DonnerRegisterView(CreateAPIView):
     queryset = Donner.objects.all()
     permission_classes = (AllowAny,)
@@ -51,6 +93,22 @@ class DonnerRegisterView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
+
+            token = RefreshToken.for_user(user).access_token
+            current_site = get_current_site(request).domain
+            relative_link = reverse("email_verify_donner")
+
+            absurl = "http://" + current_site + \
+                relative_link + "?token=" + str(token)
+            email_body = "Hi " + user.first_name + \
+                " use link below to verify you email\n" + absurl
+            data = {
+                "to_email": user.email,
+                "email_subject": "Verify your email",
+                "email_body": email_body,
+            }
+            Util.send_email(data)
+
             return Response(
                 {
                     "user": DonnerDetailSerializer(
@@ -77,6 +135,22 @@ class NGORegisterView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
+
+            token = RefreshToken.for_user(user).access_token
+            current_site = get_current_site(request).domain
+            relative_link = reverse("email_verify_ngo")
+
+            absurl = "http://" + current_site + \
+                relative_link + "?token=" + str(token)
+            email_body = "Hi " + user.name + \
+                " use link below to verify you email\n" + absurl
+            data = {
+                "to_email": user.email,
+                "email_subject": "Verify your email",
+                "email_body": email_body,
+            }
+            Util.send_email(data)
+
             return Response(
                 {
                     "user": NGODetailSerializer(
