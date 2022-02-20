@@ -86,7 +86,7 @@ class DonnerRegisterView(CreateAPIView):
             absurl = "http://" + current_site + \
                 relative_link + "?token=" + str(token)
             email_body = "Hi " + user.first_name + \
-                " use link below to verify you email\n" + absurl
+                " use link below to verify your email\n" + absurl
             data = {
                 "to_email": user.email,
                 "email_subject": "Verify your email",
@@ -128,7 +128,7 @@ class NGORegisterView(CreateAPIView):
             absurl = "http://" + current_site + \
                 relative_link + "?token=" + str(token)
             email_body = "Hi " + user.name + \
-                " use link below to verify you email\n" + absurl
+                " use link below to verify your email\n" + absurl
             data = {
                 "to_email": user.email,
                 "email_subject": "Verify your email",

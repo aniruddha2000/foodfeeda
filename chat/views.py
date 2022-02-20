@@ -1,4 +1,3 @@
-from cgitb import lookup
 from django.shortcuts import render
 
 from accounts.models import NGO, Donner
