@@ -1,4 +1,3 @@
-from django.conf import settings
 from rest_framework.serializers import ModelSerializer
 
 from posts.models import DonationPost, FoodPost

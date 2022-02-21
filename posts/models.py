@@ -1,8 +1,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.shortcuts import reverse
-from django.utils.text import slugify
 
 from accounts.models import NGO, Donner
 

@@ -1,5 +1,4 @@
 from django.contrib.auth.password_validation import validate_password
-from rest_framework.response import Response
 from rest_framework.serializers import (
     CharField, EmailField, ModelSerializer, ValidationError)
 from rest_framework.validators import UniqueValidator
