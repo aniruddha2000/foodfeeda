@@ -1,11 +1,12 @@
 from django.urls import path
-from chat import views
+
+# from chat.views import message_list, message_list_receiver
+from chat.views import MessageListByReceiver, MessegeList
+
 urlpatterns = [
-    # URL form : "/api/messages/1/2"
-    # For GET request.
-    path('messages/<int:sender>/<int:receiver>',
-         views.message_list, name='message-detail'),
-    # URL form : "/api/messages/"
-    path('messages/', views.message_list,
-         name='message-list'),
+    path('messages/<int:sender>/<int:receiver>/',
+         MessegeList.as_view(), name='message-detail'),
+    path('messages/<int:receiver>/', MessageListByReceiver.as_view(),
+         name='message-detail-receiver'),
+    path('messages/', MessegeList.as_view(), name='message-list'),
 ]

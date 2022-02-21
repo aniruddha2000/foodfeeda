@@ -1,6 +1,4 @@
-from rest_framework.pagination import (
-    LimitOffsetPagination,
-)
+from rest_framework.pagination import LimitOffsetPagination
 
 
 class PostLimitOffsetPagination(LimitOffsetPagination):

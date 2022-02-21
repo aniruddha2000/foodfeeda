@@ -1,6 +1,6 @@
-from django.conf import settings
 from rest_framework.serializers import ModelSerializer
-from posts.models import FoodPost, DonationPost
+
+from posts.models import DonationPost, FoodPost
 
 
 class PostCreateSerializer(ModelSerializer):

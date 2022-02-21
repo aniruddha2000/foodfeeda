@@ -1,21 +1,13 @@
 from django.urls import path
-from accounts.views import (
-    DonnerRegisterView,
-    NGORegisterView,
-    DonnerViewSet,
-    NGOViewSet,
-    MyObtainTokenPairView,
-    APILogoutView,
-    DonnerChangePasswordView,
-    NGOChangePasswordView,
-    DonnerUpdateProfileView,
-    NGOUpdateProfileView
-)
-from rest_framework_simplejwt.views import (
-    TokenRefreshView,
-    TokenVerifyView,
-)
+from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
+from accounts.views.token_obtain import MyObtainTokenPairView
+from accounts.views.logout import APILogoutView
+from accounts.views.password_change import NGOChangePasswordView, DonnerChangePasswordView
+from accounts.views.register import DonnerRegisterView, NGORegisterView
+from accounts.views.update_profile import DonnerUpdateProfileView, NGOUpdateProfileView
+from accounts.views.user_view import DonnerViewSet, NGOViewSet
+from accounts.views.verify_email import VerifyEmail
 
 urlpatterns = [
     path(
@@ -38,4 +30,6 @@ urlpatterns = [
          NGOUpdateProfileView.as_view(), name="update-profile-ngo"),
     path("donner/user/<id>", DonnerViewSet.as_view(), name="donner-user"),
     path("ngo/user/<id>", NGOViewSet.as_view(), name="ngo-user"),
+    path("auth/user/email-veryfy/", VerifyEmail.as_view(), name="email_verify"),
+
 ]

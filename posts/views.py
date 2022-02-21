@@ -1,18 +1,12 @@
 
-from django.http import JsonResponse
-
-from accounts.models import NGO, Donner
 from rest_framework import status
 from rest_framework.generics import (
-    DestroyAPIView,
-    ListAPIView,
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
-)
+    ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from accounts.models import NGO, Donner
 from posts.models import FoodPost
 from posts.pagination import PostLimitOffsetPagination
 from posts.serializers import *

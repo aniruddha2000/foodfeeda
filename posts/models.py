@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
-from accounts.models import Donner, NGO
+
 from django.db import models
 
-from django.utils.text import slugify
-from django.shortcuts import reverse
+from accounts.models import NGO, Donner
 
 
 class FoodPost(models.Model):
