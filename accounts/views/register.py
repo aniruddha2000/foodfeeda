@@ -1,15 +1,14 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
-from rest_framework.generics import (
-    CreateAPIView)
+from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from accounts.models import Donner, NGO
+from accounts.models import NGO, Donner
 from accounts.serializers import (
-    DonnerDetailSerializer, DonnerRegisterSerializer,
-    NGODetailSerializer, NGORegisterSerializer)
+    DonnerDetailSerializer, DonnerRegisterSerializer, NGODetailSerializer,
+    NGORegisterSerializer,)
 from accounts.utils import Util
 
 
@@ -24,7 +23,7 @@ class DonnerRegisterView(CreateAPIView):
             user = serializer.save()
 
             token = RefreshToken.for_user(user).access_token
-            current_site = get_current_site(request).domain
+            current_site = "localhost:3000"
             relative_link = reverse("email_verify")
 
             absurl = "http://" + current_site + \
@@ -66,7 +65,7 @@ class NGORegisterView(CreateAPIView):
             user = serializer.save()
 
             token = RefreshToken.for_user(user).access_token
-            current_site = get_current_site(request).domain
+            current_site = "localhost:3000"
             relative_link = reverse("email_verify")
 
             absurl = "http://" + current_site + \
