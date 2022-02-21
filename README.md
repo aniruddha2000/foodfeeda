@@ -70,7 +70,7 @@ $ docker-compose exec backend autopep8 ./ -r -i --pep8-passes 2000 --verbose --e
 Remove unused imports
 
 ```bash
-$ docker-compose exec backend autoflake ./ -r -i --verbose --remove-unused-variables --exclude="*/migrations"
+$ docker-compose exec backend autoflake ./ -r -i --verbose --remove-all-unused-imports --remove-unused-variables --exclude="*/migrations"
 ```
 
 Sort imports
