@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "drf_yasg",
     "phonenumber_field",
     "accounts",
     "donations",
@@ -209,7 +210,7 @@ STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
