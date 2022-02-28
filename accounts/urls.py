@@ -8,6 +8,7 @@ from accounts.views.register import DonnerRegisterView, NGORegisterView
 from accounts.views.update_profile import DonnerUpdateProfileView, NGOUpdateProfileView
 from accounts.views.user_view import DonnerViewSet, NGOViewSet
 from accounts.views.verify_email import VerifyEmail
+from accounts.views.password_change_email import PasswordTokenCheckAPI, EmailResetPassword, SetNewPasswordAPIView
 
 urlpatterns = [
     path(
@@ -31,5 +32,10 @@ urlpatterns = [
     path("donner/user/<id>", DonnerViewSet.as_view(), name="donner-user"),
     path("ngo/user/<id>", NGOViewSet.as_view(), name="ngo-user"),
     path("auth/user/email-veryfy/", VerifyEmail.as_view(), name="email_verify"),
-
+    path("auth/user/email/request-reset/",
+         EmailResetPassword.as_view(), name="request-email-reset"),
+    path("auth/user/email/password-reset/<uidb64>/<token>/",
+         PasswordTokenCheckAPI.as_view(), name="password-reset-confirm"),
+    path("auth/user/email/password-reset-complete/",
+         SetNewPasswordAPIView.as_view(), name="password-reset-complete"),
 ]
