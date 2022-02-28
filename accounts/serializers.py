@@ -1,10 +1,17 @@
+from dataclasses import field
+import email
+import imp
+from multiprocessing import AuthenticationError
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.serializers import (
-    CharField, EmailField, ModelSerializer, ValidationError)
+    CharField, EmailField, ModelSerializer, Serializer, ValidationError)
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
-from accounts.models import NGO, Donner
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from rest_framework.exceptions import AuthenticationFailed
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_str
+from accounts.models import NGO, CustomUser, Donner
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -298,3 +305,38 @@ class NGOUpdateUserSerializer(ModelSerializer):
         instance.save()
 
         return instance
+
+
+class EmailResetPasswordSerializer(Serializer):
+    email = EmailField(min_length=5)
+
+    class Meta:
+        fields = ['email']
+
+
+class SetNewPasswordSerializer(Serializer):
+    password = CharField(min_length=6, max_length=100, write_only=True)
+    uidb64 = CharField(min_length=1, write_only=True)
+    token = CharField(min_length=1, write_only=True)
+
+    class Meta:
+        fields = ["password", "uidb64", "token"]
+
+    def validate(self, attrs):
+        try:
+            password = attrs.get("password")
+            uidb64 = attrs.get("uidb64")
+            token = attrs.get("token")
+
+            id = force_str(urlsafe_base64_decode(uidb64))
+            user = CustomUser.objects.get(id=id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                raise AuthenticationFailed("The reset link is invalid", 401)
+
+            user.set_password(password)
+            user.save()
+
+            return (user)
+        except Exception as e:
+            raise AuthenticationFailed("The reset link is invalid", 401)
