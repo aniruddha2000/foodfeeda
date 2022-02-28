@@ -1,4 +1,3 @@
-from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
@@ -8,7 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from accounts.models import NGO, Donner
 from accounts.serializers import (
     DonnerDetailSerializer, DonnerRegisterSerializer, NGODetailSerializer,
-    NGORegisterSerializer,)
+    NGORegisterSerializer)
 from accounts.utils import Util
 
 

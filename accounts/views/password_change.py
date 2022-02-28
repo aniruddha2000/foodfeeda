@@ -1,9 +1,8 @@
-from rest_framework.generics import (
-    UpdateAPIView)
+from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from accounts.models import Donner, NGO
+from accounts.models import NGO, Donner
 from accounts.serializers import (
     DonnerChangePasswordSerializer, NGOChangePasswordSerializer)
 
